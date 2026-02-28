@@ -39,9 +39,7 @@ in
       enable = mkDefault true;
       iconTheme = {
         name = mkDefault "OneUI-dark";
-        package = mkDefault (let
-          customPkgs = import ../pkgs { inherit pkgs; };
-        in customPkgs.illogical-impulse-oneui4-icons);
+        package = mkDefault customPkgs.illogical-impulse-oneui4-icons;
       };
     };
 
@@ -87,6 +85,8 @@ in
           fi
         done
 
+        targetItem="$targetPath/$itemName"
+
         # Special handling for hypr directory - preserve custom/ subdirectory
         if [ "$itemName" = "hypr" ]; then
           $DRY_RUN_CMD mkdir -p "$targetItem"
@@ -114,8 +114,6 @@ in
         if [ "$skip" = true ]; then
           continue
         fi
-
-        targetItem="$targetPath/$itemName"
 
         # Remove existing file/directory if it exists
         if [ -e "$targetItem" ] || [ -L "$targetItem" ]; then
