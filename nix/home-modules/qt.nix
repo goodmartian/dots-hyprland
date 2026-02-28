@@ -52,7 +52,8 @@ EOF
                   pkgs.kdePackages.kirigami.unwrapped
                 ]}" \
                 --prefix PATH : "${pythonEnv}/bin" \
-                --set ILLOGICAL_IMPULSE_VIRTUAL_ENV "$out/venv"
+                --set ILLOGICAL_IMPULSE_VIRTUAL_ENV "$out/venv" \
+                --suffix XDG_DATA_DIRS : "/run/current-system/sw/share:/etc/profiles/per-user/${config.home.username}/share"
             fi
           done
         '';
