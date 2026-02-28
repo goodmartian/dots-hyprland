@@ -14,7 +14,9 @@ let
     ps.cffi
     ps.click
     ps."dbus-python"
-    ps."kde-material-you-colors"
+    (ps."kde-material-you-colors".overridePythonAttrs (old: {
+      dependencies = (old.dependencies or []) ++ [ ps.python-magic ];
+    }))
     ps.libsass
     ps.loguru
     ps."material-color-utilities"
