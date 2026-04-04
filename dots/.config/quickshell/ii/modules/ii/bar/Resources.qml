@@ -26,13 +26,12 @@ MouseArea {
         }
 
         Resource {
-            iconName: "swap_horiz"
-            percentage: ResourceUsage.swapUsedPercentage
-            shown: (Config.options.bar.resources.alwaysShowSwap && percentage > 0) || 
-                (MprisController.activePlayer?.trackTitle == null) ||
+            iconName: "thermostat"
+            percentage: ResourceUsage.cpuTemp / 100
+            shown: (MprisController.activePlayer?.trackTitle == null) ||
                 root.alwaysShowAllResources
             Layout.leftMargin: shown ? 6 : 0
-            warningThreshold: Config.options.bar.resources.swapWarningThreshold
+            warningThreshold: 80
         }
 
         Resource {

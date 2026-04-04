@@ -90,5 +90,38 @@ StyledPopup {
                 }
             }
         }
+
+        Column {
+            anchors.top: parent.top
+            spacing: 8
+
+            StyledPopupHeaderRow {
+                icon: "thermostat"
+                label: Translation.tr("Temp")
+            }
+            Column {
+                spacing: 4
+                StyledPopupValueRow {
+                    icon: "memory"
+                    label: "CPU:"
+                    value: `${Math.round(ResourceUsage.cpuTemp)}°C`
+                }
+                StyledPopupValueRow {
+                    icon: "developer_board"
+                    label: "SoC:"
+                    value: `${Math.round(ResourceUsage.tcpuTemp)}°C`
+                }
+                StyledPopupValueRow {
+                    icon: "hard_drive"
+                    label: "NVMe:"
+                    value: `${Math.round(ResourceUsage.nvmeTemp)}°C`
+                }
+                StyledPopupValueRow {
+                    icon: "wifi"
+                    label: "WiFi:"
+                    value: `${Math.round(ResourceUsage.wifiTemp)}°C`
+                }
+            }
+        }
     }
 }

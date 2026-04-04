@@ -20,6 +20,11 @@ Singleton {
 	property real swapUsed: swapTotal - swapFree
     property real swapUsedPercentage: swapTotal > 0 ? (swapUsed / swapTotal) : 0
     property real cpuUsage: 0
+    property real cpuTemp: 0
+    property real cpuTempPercentage: Math.min(cpuTemp / 105, 1)
+    property real tcpuTemp: 0
+    property real wifiTemp: 0
+    property real nvmeTemp: 0
     property var previousCpuStats
 
     property string maxAvailableMemoryString: kbToGbString(ResourceUsage.memoryTotal)
@@ -75,6 +80,12 @@ Singleton {
             swapTotal = Number(textMeminfo.match(/SwapTotal: *(\d+)/)?.[1] ?? 1)
             swapFree = Number(textMeminfo.match(/SwapFree: *(\d+)/)?.[1] ?? 0)
 
+            // Parse temperatures
+            cpuTemp = Number(fileTemp.text().trim()) / 1000
+            tcpuTemp = Number(fileTcpu.text().trim()) / 1000
+            wifiTemp = Number(fileWifiTemp.text().trim()) / 1000
+            nvmeTemp = Number(fileNvmeTemp.text().trim()) / 1000
+
             // Parse CPU usage
             const textStat = fileStat.text()
             const cpuLine = textStat.match(/^cpu\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/)
@@ -99,6 +110,10 @@ Singleton {
 
 	FileView { id: fileMeminfo; path: "/proc/meminfo" }
     FileView { id: fileStat; path: "/proc/stat" }
+    FileView { id: fileTemp; path: "/sys/class/thermal/thermal_zone6/temp" }
+    FileView { id: fileTcpu; path: "/sys/class/thermal/thermal_zone3/temp" }
+    FileView { id: fileWifiTemp; path: "/sys/class/thermal/thermal_zone4/temp" }
+    FileView { id: fileNvmeTemp; path: "/sys/class/nvme/nvme0/hwmon0/temp1_input" }
 
     Process {
         id: findCpuMaxFreqProc
